@@ -11,21 +11,47 @@ import SwiftUI
     @Published private(set) var people: [Prospect]
     
     let saveKey = "SavedData"
+    /// Challenge 2:
+    let savePath = FileManager.documentsDirectory.appendingPathExtension("HotProspects")
     
+//    init() {
+//        if let data = UserDefaults.standard.data(forKey: saveKey) {
+//            if let decoded = try? JSONDecoder().decode([Prospect].self, from: data) {
+//                people = decoded
+//                return
+//            }
+//        }
+//
+//        people = []
+//    }
+    
+    /// Challenge 2:
     init() {
-        if let data = UserDefaults.standard.data(forKey: saveKey) {
-            if let decoded = try? JSONDecoder().decode([Prospect].self, from: data) {
-                people = decoded
-                return
-            }
+        do {
+            let data = try Data(contentsOf: savePath)
+            people = try JSONDecoder().decode([Prospect].self, from: data)
+            return
+        } catch {
+            print(error.localizedDescription)
         }
         
         people = []
     }
     
+//    private func save() {
+//        if let encoded = try? JSONEncoder().encode(people) {
+//            UserDefaults.standard.set(encoded, forKey: saveKey)
+//        }
+//    }
+    
+    /// Challenge 2:
     private func save() {
         if let encoded = try? JSONEncoder().encode(people) {
-            UserDefaults.standard.set(encoded, forKey: saveKey)
+            do {
+                try encoded.write(to: savePath, options: [.atomic, .completeFileProtection])
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -41,9 +67,19 @@ import SwiftUI
     }
 }
 
-class Prospect: Identifiable, Codable {
+/// Challenge 3:
+class Prospect: Identifiable, Codable, Comparable {
+    
     var id = UUID()
     var name = "Anonymous"
     var emailAddress = ""
     fileprivate(set) var isContacted = false
+    
+    static func <(lhs: Prospect, rhs: Prospect) -> Bool {
+        lhs.name < rhs.name
+    }
+    
+    static func ==(lhs: Prospect, rhs: Prospect) -> Bool {
+        lhs.id == rhs.id
+    }
 }
