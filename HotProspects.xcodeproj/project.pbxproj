@@ -44,11 +44,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B8CCC6E3299D2A4D00A91F68 = {
+		B80C457F29A16AA900F82FD5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				B8E4E24029A0FC12009A64AF /* FileManager-DocumentsDirectory.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		B80C458029A16ACD00F82FD5 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
 				B8EA592029A05BBB00868B4E /* ImageSaver.swift */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
+		B80C458129A16AF000F82FD5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8CCC6F1299D2A4E00A91F68 /* ContentView.swift */,
+				B8EA5917299FF5AA00868B4E /* ProspectsView.swift */,
+				B8EA5919299FF5BB00868B4E /* MeView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B80C458229A16B0400F82FD5 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B8EA591B299FFDEE00868B4E /* Prospect.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		B8CCC6E3299D2A4D00A91F68 = {
+			isa = PBXGroup;
+			children = (
+				B80C457F29A16AA900F82FD5 /* Extensions */,
+				B80C458029A16ACD00F82FD5 /* Tools */,
 				B8CCC6EE299D2A4E00A91F68 /* HotProspects */,
 				B8CCC6ED299D2A4E00A91F68 /* Products */,
 			);
@@ -66,10 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				B8CCC6EF299D2A4E00A91F68 /* HotProspectsApp.swift */,
-				B8CCC6F1299D2A4E00A91F68 /* ContentView.swift */,
-				B8EA5917299FF5AA00868B4E /* ProspectsView.swift */,
-				B8EA5919299FF5BB00868B4E /* MeView.swift */,
-				B8EA591B299FFDEE00868B4E /* Prospect.swift */,
+				B80C458129A16AF000F82FD5 /* Views */,
+				B80C458229A16B0400F82FD5 /* Objects */,
 				B8CCC6F3299D2A5000A91F68 /* Assets.xcassets */,
 				B8CCC6F5299D2A5000A91F68 /* Preview Content */,
 			);

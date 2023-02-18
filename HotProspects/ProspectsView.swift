@@ -17,7 +17,7 @@ struct ProspectsView: View {
     
     @State private var isShowingScanner = false
     /// Challenge 3:
-    @State private var showingConfirmation = false
+    @State private var isShowingSortingOptions = false
     @AppStorage("sorting") private var isSortedAlphabetically = false
     
     /// Challenge 3:
@@ -93,10 +93,10 @@ struct ProspectsView: View {
                         }
                         
                         /// Challenge 1:
-                        Spacer()
-                        
                         if filter == .none {
-                            Label("", systemImage: prospect.isContacted ? "checkmark.circle" : "questionmark.diamond")
+                            Spacer()
+                            
+                            Image(systemName: prospect.isContacted ? "checkmark.circle" : "questionmark.diamond")
                         }
                     }
                 }
@@ -105,10 +105,11 @@ struct ProspectsView: View {
                 .toolbar {
                     /// Challenge 3:
                     Button {
-                        showingConfirmation = true
+                        isShowingSortingOptions = true
                     } label: {
-                        Label("Sort", systemImage: "slider.horizontal.3")
+                        Label("Sort", systemImage: "arrow.up.arrow.down")
                     }
+                    
                     Button {
                         isShowingScanner = true
                     } label: {
@@ -122,7 +123,7 @@ struct ProspectsView: View {
                     }
                 }
                 /// Challenge 3:
-                .confirmationDialog("Sorting options", isPresented: $showingConfirmation) {
+                .confirmationDialog("Sorting options", isPresented: $isShowingSortingOptions) {
                     Button("Name") { isSortedAlphabetically = true }
                     Button("Most recent") { isSortedAlphabetically = false }
                     Button("Cancel", role: .cancel) { }
@@ -133,9 +134,11 @@ struct ProspectsView: View {
     }
     
     func handleScan(result: Result<ScanResult, ScanError>) {
+        
         isShowingScanner = false
         
         switch result {
+            
         case .success(let result):
             let details = result.string.components(separatedBy: "\n")
             
@@ -146,26 +149,31 @@ struct ProspectsView: View {
             person.emailAddress = details[1]
             
             prospects.add(person)
+            
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
         }
     }
     
     func addNotification(for prospect: Prospect) {
+        
         let center = UNUserNotificationCenter.current()
         
         let addRequest = {
+            
             let content = UNMutableNotificationContent()
             content.title = "Contact \(prospect.name)"
             content.subtitle = prospect.emailAddress
             content.sound = UNNotificationSound.default
             
-            var dateComponents = DateComponents()
-            dateComponents.hour = 9
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+//          var dateComponents = DateComponents()
+//          dateComponents.hour = 9
+//          let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
             center.add(request)
         }
         

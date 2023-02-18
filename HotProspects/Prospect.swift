@@ -8,6 +8,7 @@
 import SwiftUI
 
 @MainActor class Prospects: ObservableObject {
+    
     @Published private(set) var people: [Prospect]
     
     let saveKey = "SavedData"
@@ -27,6 +28,7 @@ import SwiftUI
     
     /// Challenge 2:
     init() {
+        
         do {
             let data = try Data(contentsOf: savePath)
             people = try JSONDecoder().decode([Prospect].self, from: data)
@@ -46,6 +48,7 @@ import SwiftUI
     
     /// Challenge 2:
     private func save() {
+        
         if let encoded = try? JSONEncoder().encode(people) {
             do {
                 try encoded.write(to: savePath, options: [.atomic, .completeFileProtection])

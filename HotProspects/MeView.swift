@@ -50,6 +50,7 @@ struct MeView: View {
     }
     
     func generateQRCode(from string: String) -> UIImage {
+        
         filter.message = Data(string.utf8)
         
         if let outputImage = filter.outputImage {
